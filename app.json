@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "quick-shop",
+    "scheme": "quick-shop",
     "slug": "quick-shop",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -23,6 +24,18 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "a4d79a5c-028e-4b9c-9f5a-529e6cc948b6"
+      }
+    },
+    "owner": "salman16"
   }
 }
