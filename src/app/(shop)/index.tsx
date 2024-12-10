@@ -4,27 +4,29 @@ import { FlatList, Text, View, StyleSheet, SafeAreaView } from "react-native";
 import { PRODUCTS } from "../../../assets/products";
 import { ProductListItem } from "../../components/product-list-item";
 import { ListHeader } from "../../components/list-header";
-import Auth from "../auth";
+// import { useAuth } from "../../providers/auth-provider";
+
 
 const Home = () => {
+  // const {user} = useAuth(); 
+  // console.log(user); 
   return (
-    <Auth></Auth>
-    // <SafeAreaView style={{ flex: 1 }}>
-    //   <FlatList
-    //     data={PRODUCTS}
-    //     renderItem={({ item }) => (
-    //       <View>
-    //         <ProductListItem product={item} />
-    //       </View>
-    //     )}
-    //     keyExtractor={(item) => item.id.toString()}
-    //     numColumns={2}
-    //     ListHeaderComponent={ListHeader}
-    //     contentContainerStyle={styles.flatListContent}
-    //     columnWrapperStyle={styles.flatListColumn}
-    //     style={{ paddingHorizontal: 10, paddingVertical: 5 }}
-    //   />
-    // </SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <FlatList
+        data={PRODUCTS}
+        renderItem={({ item }) => (
+          <View>
+            <ProductListItem product={item} />
+          </View>
+        )}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={2}
+        ListHeaderComponent={ListHeader}
+        contentContainerStyle={styles.flatListContent}
+        columnWrapperStyle={styles.flatListColumn}
+        style={{ paddingHorizontal: 10, paddingVertical: 5 }}
+      />
+    </SafeAreaView>
   );
 };
 

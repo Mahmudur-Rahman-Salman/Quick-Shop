@@ -9,6 +9,10 @@ import {
 } from "react-native";
 import * as zod from "zod";
 import { zodResolver } from "./../../node_modules/@hookform/resolvers/zod/src/zod";
+import { supabase } from "../lib/supabase";
+import { Toast } from "react-native-toast-notifications";
+import { useAuth } from "../providers/auth-provider";
+import { Redirect } from "expo-router";
 
 const authSchema = zod.object({
   email: zod.string().email({ message: "Invalid email address" }),
@@ -18,6 +22,10 @@ const authSchema = zod.object({
 });
 
 export default function Auth() {
+  const { session } = useAuth();
+
+  if (session) return <Redirect href="/" />;
+
   const { control, handleSubmit, formState } = useForm({
     resolver: zodResolver(authSchema),
     defaultValues: {
@@ -27,11 +35,31 @@ export default function Auth() {
   });
 
   const signIn = async (data: zod.infer<typeof authSchema>) => {
-    console.log(data);
+    const { error } = await supabase.auth.signInWithPassword(data);
+
+    if (error) {
+      alert(error.message);
+    } else {
+      Toast.show("Signed in successfully", {
+        type: "success",
+        placement: "top",
+        duration: 1500,
+      });
+    }
   };
 
   const signUp = async (data: zod.infer<typeof authSchema>) => {
-    console.log(data);
+    const { error } = await supabase.auth.signUp(data);
+
+    if (error) {
+      alert(error.message);
+    } else {
+      Toast.show("Signed up successfully", {
+        type: "success",
+        placement: "top",
+        duration: 1500,
+      });
+    }
   };
 
   return (
@@ -42,6 +70,7 @@ export default function Auth() {
       style={styles.backgroundImage}
     >
       <View style={styles.overlay} />
+      {/* <Stack.Screen options={{ headerShown: false }} /> */}
       <View style={styles.container}>
         <Text style={styles.title}>Welcome</Text>
         <Text style={styles.subtitle}>Please Authenticate to continue</Text>
